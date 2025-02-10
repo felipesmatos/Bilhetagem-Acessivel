@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identificação</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <style>
+        .zoom-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3273dc;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .zoom-button:hover {
+            background-color: #2759a5;
+        }
+
+        body {
+            overflow-x: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .zoomed {
+            zoom: 1.3;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-text-centered">Identificação</h1>
+            <div class="columns is-centered">
+                <div class="column is-5">
+                    <div class="box">
+                        <h2 class="subtitle">Já tenho cadastro</h2>
+                        <form action="finalizarCompra-zoom.html" method="GET">
+                            <input type="hidden" name="jogo" id="jogo">
+                            <input type="hidden" name="precoTotal" id="precoTotal">
+                            <input type="hidden" name="nome" id="nome">
+                            <input type="hidden" name="dataJogo" id="dataJogo">
+                            <input type="hidden" name="localJogo" id="localJogo">
+                            <div class="field">
+                                <label class="label">E-mail</label>
+                                <div class="control">
+                                    <input class="input" type="email" name="email" placeholder="Digite seu e-mail"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Senha</label>
+                                <div class="control">
+                                    <input class="input" type="password" name="senha" placeholder="Digite sua senha"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <button class="button is-primary is-fullwidth" type="submit">Entrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="column is-5">
+                    <div class="box">
+                        <h2 class="subtitle">Quero criar um cadastro</h2>
+                        <form action="registerform-zoom.html" method="GET">
+                            <input type="hidden" name="jogo" id="jogo">
+                            <input type="hidden" name="precoTotal" id="precoTotal">
+                            <input type="hidden" name="nome" id="nome">
+                            <input type="hidden" name="dataJogo" id="dataJogo">
+                            <input type="hidden" name="localJogo" id="localJogo">
+                            <div class="field">
+                                <label class="label">E-mail</label>
+                                <div class="control">
+                                    <input class="input" type="email" name="email" placeholder="Digite seu e-mail"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <button class="button is-primary is-fullwidth" type="submit">Cadastrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <button class="zoom-button" id="zoomToggle" aria-label="Ativar ou desativar zoom">🔍</button>
+    <script>
+
+        // Recupera os dados da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const jogo = urlParams.get('jogo');
+        const precoTotal = urlParams.get('precoTotal');
+        const nome = urlParams.get('nome');
+        const data = urlParams.get('dataJogo');
+        const local = urlParams.get('localJogo');
+
+        // Função para preencher todos os inputs ocultos com o mesmo nome
+        function preencherCamposOcultos(nomeCampo, valor) {
+            document.querySelectorAll(`input[name="${nomeCampo}"]`).forEach(input => {
+                input.value = valor;
+            });
+        }
+
+        // Preenche os campos ocultos em ambos os formulários
+        preencherCamposOcultos("jogo", jogo);
+        preencherCamposOcultos("precoTotal", precoTotal);
+        preencherCamposOcultos("nome", nome);
+        preencherCamposOcultos("dataJogo", data);
+        preencherCamposOcultos("localJogo", local);
+        let zoomAtivo = false;
+        document.getElementById("zoomToggle").addEventListener("click", function () {
+            if (zoomAtivo) {
+                document.body.classList.remove("zoomed");
+            } else {
+                document.body.classList.add("zoomed");
+            }
+            zoomAtivo = !zoomAtivo;
+        });
+    </script>
+</body>
+
+</html>

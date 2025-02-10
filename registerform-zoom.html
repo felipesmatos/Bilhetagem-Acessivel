@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" style="background-color: black;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
+    <style>
+        /* Ícone fixo no canto inferior direito */
+        .zoom-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3273dc;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            /* Garante que o botão fique acima do conteúdo */
+        }
+
+        /* Efeito hover */
+        .zoom-button:hover {
+            background-color: #2759a5;
+        }
+
+        /* Ajuste para evitar rolagem quando der zoom */
+        body {
+            overflow-x: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Quando ativar o zoom */
+        .zoomed {
+            zoom: 1.5;
+        }
+    </style>
+</head>
+
+<body style="display: flex; justify-content:center; align-items:center; height: 100vh;">
+
+    <div class="box" style="min-height:60%; min-width:50vh; max-height:70%; max-width:50vh">
+        <h1 class="title is-size-3 has-text-weight-semibold has-text-centered mt-5">Cadastro</h1>
+        <div style="padding-left:25px ; padding-right:25px">
+            <form action="identificacao-zoom.html" method="GET">
+                <div class="field">
+                    <input type="hidden" name="jogo" id="jogo">
+                    <input type="hidden" name="precoTotal" id="precoTotal">
+                    <input type="hidden" name="nome" id="nome">
+                    <input type="hidden" name="dataJogo" id="dataJogo">
+                    <input type="hidden" name="localJogo" id="localJogo">
+                    <label class="label">Nome Completo</label>
+                    <div class="control">
+                        <input class="input" type="text" name="nomeusuario" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Usuário</label>
+                    <div class="control">
+                        <input class="input" type="text" name="usuarioreg" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Senha</label>
+                    <div class="control">
+                        <input class="input" type="password" name="senhareg" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Confirme a Senha</label>
+                    <div class="control">
+                        <input class="input" type="password" name="confirmar_senhareg" required>
+                    </div>
+                </div>
+                <div class="field is-grouped mt-4">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Cadastrar</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-light" type="button" id="backButton">Voltar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <button class="zoom-button" id="zoomToggle" aria-label="Ativar ou desativar zoom">🔍</button>
+
+    <script>
+        // Recupera os dados da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const jogo = urlParams.get('jogo');
+        const precoTotal = urlParams.get('precoTotal');
+        const nome = urlParams.get('nome');
+        const data = urlParams.get('dataJogo');
+        const local = urlParams.get('localJogo');
+
+
+        // Preenche os campos ocultos
+        document.getElementById('jogo').value = jogo;
+        document.getElementById('precoTotal').value = precoTotal;
+        document.getElementById('nome').value = nome;
+        document.getElementById('dataJogo').value = data;
+        document.getElementById('localJogo').value = local;
+        // Função de Zoom
+        let zoomAtivo = false;
+
+        document.getElementById("zoomToggle").addEventListener("click", function () {
+            if (zoomAtivo) {
+                document.body.classList.remove("zoomed");
+            } else {
+                document.body.classList.add("zoomed");
+            }
+            zoomAtivo = !zoomAtivo;
+        });
+
+        document.getElementById("backButton").addEventListener("click", function () {
+            // Redireciona para a página identificacao-zoom.html mantendo os parâmetros da URL
+            window.location.href = `identificacao-zoom.html?jogo=${jogo}&precoTotal=${precoTotal}&nome=${nome}&dataJogo=${data}&localJogo=${local}`;
+        });
+
+    </script>
+
+</body>
+
+</html>
